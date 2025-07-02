@@ -8,6 +8,11 @@ import { useNavigate, useParams } from 'react-router';
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Eye, EyeOff } from 'lucide-react';
+import { TaskTitle } from '@/components/task/task-title';
+import { TaskStatusSelector } from "@/components/task/task-status-selector";
+import { TaskDescription } from "@/components/task/task-description";
+import {TaskAssigneesSelector} from "@/components/task/task-assignees-selector";
+import { formatDistanceToNow } from 'date-fns';
 
 function TaskDetails() {
     const {user} = useAuth();
@@ -91,8 +96,8 @@ function TaskDetails() {
         </div>
 
         <div className="flex flex-col lg:flex-row gap-6">
-            <div className="lg:col-span-2">
-                <div className="bg-card rounded-lg p-6 shadow-sm mb-6">
+            <div className="lg:col-span-2 w-full">
+                <div className="bg-card  rounded-lg p-6 shadow-sm mb-6">
                     <div className="flex flex-col md:flex-row justify-between items-start mb-4">
                         <div>
                             <Badge 
@@ -107,8 +112,45 @@ function TaskDetails() {
                             >
                                 {task.priority} Priortiy
                             </Badge>
+
+                            <TaskTitle title={task.title} taskId={task._id}/>
+                            <div className='text-sm  text-muted-foreground'>
+                                Created at:{" "}
+                                {formatDistanceToNow(new Date(task.createdAt),{
+                                    addSuffix: true,   
+                                })}
+                            </div>
+                        </div>
+                        <div className="flex items-center gap-2 mt-4 md:mt-0">
+                            <TaskStatusSelector status={task.status} taskId={task._id} />
+
+                            <Button
+                            variant={"destructive"}
+                            size="sm"
+                            onClick={() => {}}
+                            className="hidden md:block"
+                            >
+                            Delete Task
+                            </Button>
                         </div>
                     </div>
+                    
+                    <div className="mb-6">
+                        <h3 className="text-sm font-medium text-muted-foreground mb-0">
+                            Description
+                        </h3>
+
+                        <TaskDescription
+                            description={task.description || ""}
+                            taskId={task._id}
+                        />
+                    </div>
+
+                    <TaskAssigneesSelector
+                        task={task}
+                        assignees={task.assignees}
+                        projectMembers={project.members as any}
+                    />
                 </div>
             </div>
         </div>
