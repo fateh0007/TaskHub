@@ -1,6 +1,6 @@
 import { BackButton } from '@/components/back-button';
 import { Loader } from '@/components/loader';
-import { useTaskByIdQuery } from '@/hooks/use-task';
+import { useAchievedTaskMutation, useTaskByIdQuery, useWatchTaskMutation } from '@/hooks/use-task';
 import { useAuth } from '@/provider/auth-context';
 import type { Project, Task } from '@/types';
 import React from 'react'
@@ -8,11 +8,17 @@ import { useNavigate, useParams } from 'react-router';
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Eye, EyeOff } from 'lucide-react';
+import { CommentSection } from "@/components/task/comment-section";
+import { SubTasksDetails } from "@/components/task/sub-tasks";
 import { TaskTitle } from '@/components/task/task-title';
 import { TaskStatusSelector } from "@/components/task/task-status-selector";
 import { TaskDescription } from "@/components/task/task-description";
 import {TaskAssigneesSelector} from "@/components/task/task-assignees-selector";
+import { TaskPrioritySelector } from "@/components/task/task-priority-selector";
 import { formatDistanceToNow } from 'date-fns';
+import { Watchers } from "@/components/task/watchers";
+import { TaskActivity } from "@/components/task/task-activity";
+import { toast } from "sonner";
 
 function TaskDetails() {
     const {user} = useAuth();
@@ -31,6 +37,8 @@ function TaskDetails() {
         };
         isLoading : boolean;
     }
+    const {mutate: watchTask, isPending: isWatching} = useWatchTaskMutation();
+    const {mutate: achievedTask, isPending: isAchieved} = useAchievedTaskMutation();
 
     if(isLoading){
         return <div><Loader/></div>
@@ -52,6 +60,34 @@ function TaskDetails() {
     const goBack = () => navigate(-1);
     const members = task?.assignees || [];
 
+    const handleWatchTask = () => {
+        watchTask(
+          { taskId: task._id },
+          {
+            onSuccess: () => {
+              toast.success("Task watched");
+            },
+            onError: () => {
+              toast.error("Failed to watch task");
+            },
+          }
+        );
+    };
+
+    const handleAchievedTask = () => {
+        achievedTask(
+          { taskId: task._id },
+          {
+            onSuccess: () => {
+              toast.success("Task achieved");
+            },
+            onError: () => {
+              toast.error("Failed to achieve task");
+            },
+          }
+        );
+      };
+
   return (
     <div className="container mx-auto p-0 py-4 md:px-4">
         <div className="flex flex-col md:flex-row items-center justify-between mb-6">
@@ -68,8 +104,9 @@ function TaskDetails() {
                 <Button
                     variant="outline"
                     size="sm"
-                    onClick={()=>{}}
+                    onClick={handleWatchTask}
                     className='w-fit'
+                    disabled={isWatching}
                 >
                     {isUserWatching ? (
                     <>
@@ -87,8 +124,9 @@ function TaskDetails() {
                 <Button
                     variant={"outline"}
                     size="sm"
-                    onClick={()=>{}}
+                    onClick={handleAchievedTask}
                     className="w-fit"
+                    disabled={isAchieved}
                 >
                     {task.isArchived ? "Unarchive" : "Archive"}
                 </Button>
@@ -151,7 +189,18 @@ function TaskDetails() {
                         assignees={task.assignees}
                         projectMembers={project.members as any}
                     />
+
+                    <TaskPrioritySelector priority={task.priority} taskId={task._id} />
+
+                    <SubTasksDetails subTasks={task.subtasks || []} taskId={task._id} />
                 </div>
+                <CommentSection taskId={task._id} members={project.members as any} />
+            </div>
+
+            <div className="w-full">
+                <Watchers watchers={task.watchers || []} />
+
+                <TaskActivity resourceId={task._id} />
             </div>
         </div>
     </div>
