@@ -94,7 +94,7 @@ const getWorkspaceProjects = async (req, res) => {
 };
 
 const getWorkspaceStats = async (req, res) => {
-  try {
+  try { 
     const { workspaceId } = req.params;
 
     const workspace = await Workspace.findById(workspaceId);
