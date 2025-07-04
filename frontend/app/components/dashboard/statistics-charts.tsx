@@ -107,7 +107,8 @@ export const StatisticsCharts = ({
                   strokeWidth={2}
                   dot={{ r: 4 }}
                 />
-                <ChartLegend content={<ChartLegendContent />} />
+                <ChartLegend //@ts-ignore
+                content={<ChartLegendContent />} />
               </LineChart>
             </ChartContainer>
           </div>
@@ -128,7 +129,7 @@ export const StatisticsCharts = ({
         </CardHeader>
 
         <CardContent className="w-full overflow-x-auto md:overflow-x-hidden">
-          <div className="w-full flex justify-center">
+          <div className="w-[88%] flex justify-center mr-20">
             <ChartContainer
               className="h-[300px]"
               config={{
@@ -148,6 +149,7 @@ export const StatisticsCharts = ({
                   outerRadius={80}
                   paddingAngle={2}
                   label={({ name, percent }) =>
+                    //@ts-ignore
                     `${name} (${(percent * 100).toFixed(0)}%)`
                   }
                   labelLine={false}
@@ -156,8 +158,11 @@ export const StatisticsCharts = ({
                     <Cell key={`cell-${index}`} fill={entry.color} />
                   ))}
                 </Pie>
+                
                 <ChartTooltip />
-                <ChartLegend content={<ChartLegendContent />} />
+                
+                <ChartLegend //@ts-ignore
+                content={<ChartLegendContent />} />
               </PieChart>
             </ChartContainer>
           </div>
@@ -195,6 +200,7 @@ export const StatisticsCharts = ({
                   dataKey="value"
                   nameKey="name"
                   label={({ name, percent }) =>
+                    //@ts-ignore
                     `${name} ${(percent * 100).toFixed(0)}%`
                   }
                   labelLine={false}
@@ -204,7 +210,8 @@ export const StatisticsCharts = ({
                   ))}
                 </Pie>
                 <ChartTooltip />
-                <ChartLegend content={<ChartLegendContent />} />
+                <ChartLegend //@ts-ignore
+                 content={<ChartLegendContent />} />
               </PieChart>
             </ChartContainer>
           </div>
@@ -263,7 +270,8 @@ export const StatisticsCharts = ({
                   radius={[4, 4, 0, 0]}
                   name="Completed Tasks"
                 />
-                <ChartLegend content={<ChartLegendContent />} />
+                <ChartLegend //@ts-ignore
+                 content={<ChartLegendContent />} />
               </BarChart>
             </ChartContainer>
           </div>
