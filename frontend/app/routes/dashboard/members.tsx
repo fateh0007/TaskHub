@@ -25,12 +25,22 @@ import type { Task, Workspace } from "@/types";
 import { format } from "date-fns";
 import { ArrowUpRight, CheckCircle, Clock, FilterIcon } from "lucide-react";
 import React, { useEffect, useState } from "react";
-import { Link, useSearchParams } from "react-router";
+import { Link, useNavigate, useSearchParams } from "react-router";
 
 const Members = () => {
   const [searchParams, setSearchParams] = useSearchParams();
-
   const workspaceId = searchParams.get("workspaceId");
+//   if (!workspaceId) {
+//     return (
+//       <div className="flex flex-col items-center justify-center h-[60vh] text-center space-y-4">
+//         <h2 className="text-2xl font-bold text-gray-800">No Workspace Selected</h2>
+//         <p className="text-gray-600 text-sm">
+//           Please select a workspace from the dropdown above or create a new one to get started.
+//         </p>
+        
+//       </div>
+//     );
+//   }
   const initialSearch = searchParams.get("search") || "";
   const [search, setSearch] = useState<string>(initialSearch);
 
@@ -58,13 +68,23 @@ const Members = () => {
 
   if (isLoading)
     return (
-      <div>
-        <Loader />
-      </div>
+        <div className="flex flex-col items-center justify-center h-[60vh] text-center space-y-4">
+            <h2 className="text-2xl font-bold text-gray-800">No Workspace Selected</h2>
+            <p className="text-gray-600 text-sm">
+            Please select a workspace from the dropdown above or create a new one to get started.
+            </p>
+        </div>
     );
 
-  if (!data || !workspaceId) return <div>No workspace found</div>;
-
+  if (!data || !workspaceId) {
+    return (
+        <div className="flex flex-col items-center justify-center h-[60vh] text-center space-y-4">
+            <h2 className="text-2xl font-bold text-gray-800">No Workspace Selected</h2>
+            <p className="text-gray-600 text-sm">
+                Please select a workspace from the dropdown above or create a new one to get started.
+            </p>
+        </div>
+  )}
   const filteredMembers = data?.members?.filter(
     (member) =>
       member.user.name.toLowerCase().includes(search.toLowerCase()) ||
