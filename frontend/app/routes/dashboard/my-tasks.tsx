@@ -278,7 +278,7 @@ const MyTasks = () => {
                 {todoTasks?.map((task) => (
                   <Card
                     key={task._id}
-                    className="hover:shadow-md transition-shadow"
+                    className="hover:shadow-md transition-shadow p-3"
                   >
                     <Link
                       to={`/workspaces/${task.project.workspace}/projects/${task.project._id}/tasks/${task._id}`}
@@ -330,7 +330,7 @@ const MyTasks = () => {
                 {inProgressTasks?.map((task) => (
                   <Card
                     key={task._id}
-                    className="hover:shadow-md transition-shadow"
+                    className="hover:shadow-md transition-shadow p-3"
                   >
                     <Link
                       to={`/workspaces/${task.project.workspace}/projects/${task.project._id}/tasks/${task._id}`}
@@ -382,7 +382,7 @@ const MyTasks = () => {
                 {doneTasks?.map((task) => (
                   <Card
                     key={task._id}
-                    className="hover:shadow-md transition-shadow"
+                    className="hover:shadow-md transition-shadow p-3"
                   >
                     <Link
                       to={`/workspaces/${task.project.workspace}/projects/${task.project._id}/tasks/${task._id}`}
