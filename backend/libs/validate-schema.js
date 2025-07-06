@@ -63,6 +63,15 @@ const taskSchema = z.object({
     assignees: z.array(z.string()).min(1, "At least one assignee is required"),
 });
 
+const tokenSchema = z.object({
+    token: z.string().min(1, "Token is required"),
+});
+
+const inviteMemberSchema = z.object({
+    email: z.string().email("Invalid email address"),
+    role: z.enum(["admin", "member", "viewer"]),
+});
+
 export {
     registerSchema,
     loginSchema, 
@@ -71,5 +80,7 @@ export {
     emailSchema,
     workspaceSchema,
     projectSchema,
-    taskSchema
+    taskSchema,
+    tokenSchema,
+    inviteMemberSchema,
 };

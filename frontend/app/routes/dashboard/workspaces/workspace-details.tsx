@@ -6,6 +6,7 @@ import { Loader } from 'lucide-react';
 import { WorkspaceHeader } from '@/components/workspace/workspace-header';
 import { ProjectList } from '@/components/workspace/project-list';
 import { CreateProjectDialog } from "@/components/project/create-project";
+import { InviteMemberDialog } from '@/components/workspace/invite-member';
 
 const WorkspaceDetails = () => {
     const {workspaceId} = useParams<{workspaceId: string}>();
@@ -52,6 +53,11 @@ const WorkspaceDetails = () => {
             onOpenChange={setIsCreateProject}
             workspaceId={workspaceId}
             workspaceMembers={data.workspace.members as any}
+        />
+        <InviteMemberDialog
+            isOpen={isInviteMember}
+            onOpenChange={setIsInviteMember}
+            workspaceId={workspaceId}
         />
     </div>
   )
