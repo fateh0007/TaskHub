@@ -110,7 +110,7 @@ export const Header = ({
                         <DropdownMenuContent align="end">
                             <DropdownMenuLabel>My Account</DropdownMenuLabel>
                             <DropdownMenuSeparator/>
-                            <DropdownMenuItem className="cursor-pointer">
+                            <DropdownMenuItem asChild className="cursor-pointer">
                                 <Link to="/user/profile">Profile</Link>
                             </DropdownMenuItem>
                             <DropdownMenuSeparator/>
