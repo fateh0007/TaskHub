@@ -20,7 +20,7 @@ const Homepage = () => {
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between py-4">
             <div className="flex items-center gap-2">
-              <img src="../../public/logo.png" alt="TaskHub Logo" className="w-12 h-12" />
+              <img src="/logo.png" alt="TaskHub Logo" className="w-12 h-12" />
               <span className="text-xl font-bold">TaskHub</span>
             </div>
             <nav className="flex items-center gap-4">
@@ -72,7 +72,7 @@ const Homepage = () => {
 
         {/* Optional dashboard image */}
         <div className="w-full md:w-1/2">
-          <img src="../../public/dashboard.png" alt="Dashboard Preview" className="rounded-xl shadow-xl" />
+          <img src="/dashboard.png" alt="Dashboard Preview" className="rounded-xl shadow-xl" />
         </div>
       </div>
 
